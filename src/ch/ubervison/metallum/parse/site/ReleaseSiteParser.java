@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +72,7 @@ public class ReleaseSiteParser extends AbstractSiteParser<Release> {
         Elements tracks = tracklist_div_elem.select(".even, .odd");
         for(Element track : tracks){
             List<String> infos = track.select("td").stream().map(info -> info.html()).collect(Collectors.toList());
-            String[] idNumber = infos.get(0).replaceAll("<a name=\"([0-9]+)\" class=\"anchor\"> </a>([0-9]+).", "$1" + "," + "$2").split(",");
+            String[] idNumber = infos.get(0).replaceAll("<a name=\"([0-9]+)[A-Z]*\" class=\"anchor\"> </a>([0-9]+).", "$1" + "," + "$2").split(","); //
             long id = Long.parseLong(idNumber[0]);
             int number = Integer.parseInt(idNumber[1]);
             String title = infos.get(1);

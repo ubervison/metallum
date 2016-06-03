@@ -20,7 +20,7 @@ public class Test {
 
         long startTime = System.nanoTime();
 
-        AbstractSiteParser siteParser = new ReleaseSiteParser(new ReleaseSearchParser(new SimpleSearchQuery("soundtrack to your escape", SimpleSearchType.ALBUM_TITLE).getJSONData()).getEntityList().get(0));
+        AbstractSiteParser siteParser = new ReleaseSiteParser(new ReleaseSearchParser(new SimpleSearchQuery("Reign in Blood", SimpleSearchType.ALBUM_TITLE).getJSONData()).getEntityList().get(0));
         siteParser.parse();
 
         long endTime = System.nanoTime();

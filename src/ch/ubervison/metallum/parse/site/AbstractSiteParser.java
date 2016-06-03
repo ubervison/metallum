@@ -31,7 +31,7 @@ public abstract class AbstractSiteParser<T extends AbstractEntity & Accessible> 
     /**
      * Parse the given entity's page and complete it with the additional details.
      *
-     * @return the same entity with new details found on the page.
+     * @return the same entity with new details found on the page, to enable chained calls.
      * @throws IOException
      */
     abstract public T parse() throws IOException ;
