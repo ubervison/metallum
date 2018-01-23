@@ -42,7 +42,7 @@ public class MemberSearchParser extends AbstractSimpleSearchParser {
                 String aka = "";
                 long memberId = 0;
 
-                Pattern memberPat = Pattern.compile("<a href=\"http://www.metal-archives.com/artists/.*/(?<id>[0-9]+)\">(?<name>.*)</a>(?<aka>.*)");
+                Pattern memberPat = Pattern.compile("<a href=\"" + BASE_URL + "/artists/.*/(?<id>[0-9]+)\">(?<name>.*)</a>(?<aka>.*)");
 
                 Matcher memberMatcher = memberPat.matcher(name);
                 if(memberMatcher.matches()){

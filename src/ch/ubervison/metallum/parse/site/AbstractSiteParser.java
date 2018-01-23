@@ -2,6 +2,7 @@ package ch.ubervison.metallum.parse.site;
 
 import ch.ubervison.metallum.entity.AbstractEntity;
 import ch.ubervison.metallum.entity.Accessible;
+import ch.ubervison.metallum.search.SearchUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -17,6 +18,8 @@ public abstract class AbstractSiteParser<T extends AbstractEntity & Accessible> 
     protected Document doc;
     protected T entity;
 
+    public String BASE_URL = SearchUtils.BASE_URL;
+
     /**
      * Create a new site parser for the given entity.
      *
@@ -25,6 +28,7 @@ public abstract class AbstractSiteParser<T extends AbstractEntity & Accessible> 
      */
     public AbstractSiteParser(T entity) throws IOException{
         this.entity = entity;
+        System.out.println("Connecting to entity at address: " + entity.getURL());
         this.doc = Jsoup.connect(entity.getURL().toString()).get();
     }
 

@@ -111,7 +111,7 @@ public class Member extends AbstractEntity implements  Accessible {
     }
 
     public URL getURL() throws MalformedURLException {
-        String baseURL = "http://www.metal-archives.com";
+        String baseURL = "" + BASE_URL + "";
         String typeSuffix = "/artists";
         String trimmedName = getName().replaceAll(" ", "_");
 

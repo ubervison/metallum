@@ -6,6 +6,7 @@ import javax.json.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.stream.Stream;
 
 /**
  * A class that represent a simple search query to metal-archives.com.

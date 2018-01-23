@@ -47,7 +47,7 @@ public class ReleaseSiteParser extends AbstractSiteParser<Release> {
         String labelName = labelRaw.replaceAll("<a href=\".*\">|</a>", "");
         long labelId = 0;
         if(!labelRaw.equals("Independent")){
-            labelId = Long.parseLong(labelRaw.replaceAll("<a href=\"http://www.metal-archives.com/labels/.*/([0-9]+)#label_tabs_albums\">.*</a>", "$1"));
+            labelId = Long.parseLong(labelRaw.replaceAll("<a href=\"" + BASE_URL + "/labels/.*/([0-9]+)#label_tabs_albums\">.*</a>", "$1"));
         }
         Label label = new Label(labelId, labelName);
         release.setLabel(label);

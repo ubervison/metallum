@@ -43,7 +43,7 @@ public class ReleaseSearchParser extends AbstractSimpleSearchParser<Release>{
                 String releaseDate = "";
                 long releaseId = 0;
 
-                Pattern releasePat = Pattern.compile("<a href=\"http://www.metal-archives.com/albums/.*/.*/(?<id>[0-9]+)\">(?<title>.*)</a> <!-- .* -->");
+                Pattern releasePat = Pattern.compile("<a href=\"" + BASE_URL + "/albums/.*/.*/(?<id>[0-9]+)\">(?<title>.*)</a> <!-- .* -->");
                 Pattern datePat = Pattern.compile("(?<full>.*) <!-- (?<standard>[0-9]{4}-[0-9]{2}-[0-9]{2}) -->");
 
                 Matcher releaseMatcher = releasePat.matcher(title);
@@ -61,7 +61,7 @@ public class ReleaseSearchParser extends AbstractSimpleSearchParser<Release>{
 
                 Release r = new Release(releaseId, releaseTitle);
 
-                Pattern bandPat = Pattern.compile("<a href=\"http://www.metal-archives.com/bands/.*/(?<id>[0-9]+)\" title=\".*\">(?<name>.*)</a>");
+                Pattern bandPat = Pattern.compile("<a href=\"" + BASE_URL + "/bands/.*/(?<id>[0-9]+)\" title=\".*\">(?<name>.*)</a>");
 
                 if(releaseType == ReleaseType.SPLIT || releaseType == ReleaseType.SPLIT_VIDEO){
                     String[] bands = band.split(" \\| ");

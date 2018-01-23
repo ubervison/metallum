@@ -23,7 +23,7 @@ import java.net.URL;
  */
 public class SearchUtils {
 
-    private static String BASE_URL = "http://www.metal-archives.com";
+    public static String BASE_URL = "https://www.metal-archives.com";
     private static String SIMPLE_SEARCH_PREFIX = "/search?searchString=";
 
     private static String AJAX_BAND_SEARCH_PREFIX = "/search/ajax-band-search/";
@@ -147,7 +147,7 @@ public class SearchUtils {
     }
 
     public static String getLyrics(Track track) throws IOException {
-        String LYRICS_URL = "http://www.metal-archives.com/release/ajax-view-lyrics/id/" + track.getId();
+        String LYRICS_URL = "" + BASE_URL + "/release/ajax-view-lyrics/id/" + track.getId();
         System.out.println(LYRICS_URL);
         Document lyrics_doc = Jsoup.connect(LYRICS_URL).get();
         String html = Jsoup.parse(lyrics_doc.html().replaceAll("(?i)<br[^>]*>", "br2n")).text();

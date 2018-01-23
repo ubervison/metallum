@@ -71,8 +71,8 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
 
         /* Label id is 0 if unsigned/independent */
         long labelId = 0;
-        if(!labelRaw.equals("Unsigned/independent")){
-            labelId = Long.parseLong(labelRaw.replaceAll("<a href=\"http://www.metal-archives.com/labels/.*/([0-9]+)\">.*</a>", "$1"));
+        if(!labelName.equals("Unsigned/independent")){
+            labelId = Long.parseLong(labelRaw.replaceAll("<a href=\"" + BASE_URL + "/labels/.*/([0-9]+)\">.*</a>", "$1"));
         }
         band.setLabel(new Label(labelId, labelName));
 
@@ -84,7 +84,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
 
     private String getComments() throws IOException {
         long startTime = System.nanoTime();
-        String COMMENT_URL = "http://www.metal-archives.com/band/read-more/id/" + entity.getId();
+        String COMMENT_URL = "" + BASE_URL + "/band/read-more/id/" + entity.getId();
         Document doc = Jsoup.connect(COMMENT_URL).get();
         String html = Jsoup.parse(doc.html().replaceAll("(?i)<br[^>]*>", "br2n")).text();
 
@@ -103,7 +103,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
 
     private void parseDiscography(Band band) throws IOException {
         long startTime = System.nanoTime();
-        String DISCO_URL = "http://www.metal-archives.com/band/discography/id/" + band.getId() + "/tab/all";
+        String DISCO_URL = "" + BASE_URL + "/band/discography/id/" + band.getId() + "/tab/all";
         Document disco_doc = Jsoup.connect(DISCO_URL).get();
         Element disco = disco_doc.getElementsByTag("tbody").first();
         Elements releases = disco.getElementsByTag("tr");
@@ -113,7 +113,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
             /* we take each release element and put it into a list */
             List<String> infos = item_elements.stream().map(element -> element.html()).collect(Collectors.toList());
 
-            String[] name_id = infos.get(0).replaceAll("<a href=\"http://www.metal-archives.com/albums/.*/.*/([0-9]+)\" class=.*>(.*)</a>", "$1" + "\n" + "$2").split("\n");
+            String[] name_id = infos.get(0).replaceAll("<a href=\"" + BASE_URL + "/albums/.*/.*/([0-9]+)\" class=.*>(.*)</a>", "$1" + "\n" + "$2").split("\n");
             Release r = new Release(Long.parseLong(name_id[0]), name_id[1]);
 
             ReleaseType type = ReleaseType.parseReleaseType(infos.get(1));
@@ -170,7 +170,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
             Elements members = scope_div_elem.getElementsByClass("lineUpRow");
             for (Element member : members) {
                 List<String> infos = member.select("td").stream().map(info -> info.html()).collect(Collectors.toList());
-                String[] name_id = infos.get(0).replaceAll("<a href=\"http://www.metal-archives.com/artists/.*/([0-9]+)\" class=.*>(.*)</a>", "$1" + "\n" + "$2").split("\n");
+                String[] name_id = infos.get(0).replaceAll("<a href=\"" + BASE_URL + "/artists/.*/([0-9]+)\" class=.*>(.*)</a>", "$1" + "\n" + "$2").split("\n");
                 long id = Long.parseLong(name_id[0]);
                 String name = name_id[1];
                 Member m = new Member(id, name);
@@ -198,7 +198,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
 
     private void parseLinks(Band band) throws IOException {
         long startTime = System.nanoTime();
-        String LINKS_URL = "http://www.metal-archives.com/link/ajax-list/type/band/id/" + band.getId();
+        String LINKS_URL = "" + BASE_URL + "/link/ajax-list/type/band/id/" + band.getId();
         Document links_doc = Jsoup.connect(LINKS_URL).get();
         /* order matters */
         List<String> div_ids = Arrays.asList("band_links_Official", "band_links_Official_merchandise", "band_links_Unofficial", "band_links_Tablatures", "band_links_Labels");
@@ -226,7 +226,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
 
     private void parseReviews(Band band) throws IOException {
         long startTime = System.nanoTime();
-        URL REVIEW_URL = new URL("http://www.metal-archives.com/review/ajax-list-band/id/" + band.getId() + "/json/1?sEcho=1&iColumns=4&sColumns=&iDisplayStart=0&iDisplayLength=200&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&iSortCol_0=3");
+        URL REVIEW_URL = new URL("" + BASE_URL + "/review/ajax-list-band/id/" + band.getId() + "/json/1?sEcho=1&iColumns=4&sColumns=&iDisplayStart=0&iDisplayLength=200&mDataProp_0=0&mDataProp_1=1&mDataProp_2=2&mDataProp_3=3&iSortCol_0=3");
         JsonArray reviewArray = SearchUtils.getJSONData(REVIEW_URL).getJsonArray(JSON_DATA_KEY);
         List<Review> reviews = new ArrayList<>();
         for(JsonValue v : reviewArray){
@@ -241,7 +241,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
                 long release_id = 0;
                 long review_id = 0;
 
-                Pattern releasePat = Pattern.compile("<a href=\'http://www.metal-archives.com/reviews/.*/.*/(?<releaseid>[0-9]+)/(?<user>.*)/(?<reviewid>[0-9]+)\'>(?<name>.*)</a>");
+                Pattern releasePat = Pattern.compile("<a href=\'" + BASE_URL + "/reviews/.*/.*/(?<releaseid>[0-9]+)/(?<user>.*)/(?<reviewid>[0-9]+)\'>(?<name>.*)</a>");
                 Matcher releaseMatcher = releasePat.matcher(name);
                 if(releaseMatcher.matches()){
                     releaseName = releaseMatcher.group("name");
@@ -249,7 +249,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
                     review_id = Long.parseLong(releaseMatcher.group("reviewid"));
                 }
 
-                Pattern userPat = Pattern.compile("<a href=\"http://www.metal-archives.com/users/.*\" class=\"profileMenu\">(?<user>.*)</a>");
+                Pattern userPat = Pattern.compile("<a href=\"" + BASE_URL + "/users/.*\" class=\"profileMenu\">(?<user>.*)</a>");
                 Matcher userMatcher = userPat.matcher(user);
                 if(userMatcher.matches()){
                     userName = userMatcher.group("user");
@@ -271,10 +271,10 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
     }
 
     private void parseRecommendations(Band band) throws IOException {
-        String RECS_URL = "http://www.metal-archives.com/band/ajax-recommendations/id/" + band.getId() + "/showMoreSimilar/1";
+        String RECS_URL = "" + BASE_URL + "/band/ajax-recommendations/id/" + band.getId() + "/showMoreSimilar/1";
         Document recs_doc = Jsoup.connect(RECS_URL).get();
         Element noArtist = doc.getElementById("no_artists"); /* we check if there are no recommendations */
-        if(noArtist != null) {
+        if(noArtist == null) {
             Element recs = recs_doc.getElementsByTag("tbody").first();
             Elements rec_bands = recs.getElementsByTag("tr");
             rec_bands.remove(rec_bands.size() - 1); /* we remove the last <tr> tag */
@@ -287,7 +287,7 @@ public class BandSiteParser extends AbstractSiteParser<Band> {
                 String name = "";
                 long id = 0;
 
-                Pattern nameIdPat = Pattern.compile("<a href=\"http://www.metal-archives.com/bands/.*/(?<id>[0-9]+)\">(?<name>.*)</a>");
+                Pattern nameIdPat = Pattern.compile("<a href=\"" + BASE_URL + "/bands/.*/(?<id>[0-9]+)\">(?<name>.*)</a>");
                 Matcher nameIdMatcher = nameIdPat.matcher(infos.get(0));
                 if (nameIdMatcher.matches()) {
                     name = nameIdMatcher.group("name");

@@ -171,7 +171,7 @@ public class Label extends AbstractEntity implements Accessible {
     }
 
     public URL getURL() throws MalformedURLException {
-        String baseURL = "http://www.metal-archives.com";
+        String baseURL = "" + BASE_URL + "";
         String typeSuffix = "/labels";
         String trimmedName = getName().replaceAll(" ", "_");
 

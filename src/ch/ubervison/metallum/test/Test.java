@@ -1,5 +1,6 @@
 package ch.ubervison.metallum.test;
 
+import ch.ubervison.metallum.entity.Band;
 import ch.ubervison.metallum.entity.Release;
 import ch.ubervison.metallum.enums.SimpleSearchType;
 import ch.ubervison.metallum.parse.search.BandSearchParser;
@@ -20,7 +21,7 @@ public class Test {
 
         long startTime = System.nanoTime();
 
-        AbstractSiteParser siteParser = new ReleaseSiteParser(new ReleaseSearchParser(new SimpleSearchQuery("Reign in Blood", SimpleSearchType.ALBUM_TITLE).getJSONData()).getEntityList().get(0));
+        AbstractSiteParser siteParser = new ReleaseSiteParser(new ReleaseSearchParser(new SimpleSearchQuery("Psalm 9", SimpleSearchType.ALBUM_TITLE).getJSONData()).getEntityList().get(0));
         siteParser.parse();
 
         long endTime = System.nanoTime();

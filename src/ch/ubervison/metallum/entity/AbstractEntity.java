@@ -1,5 +1,7 @@
 package ch.ubervison.metallum.entity;
 
+import ch.ubervison.metallum.search.SearchUtils;
+
 /**
  * An abstract representation of an entity. An entity is an entry in the archives such as a band, an artist or a record label.
  *
@@ -13,6 +15,8 @@ public abstract class AbstractEntity {
     private String modifiedBy;
     private String addedOn;
     private String lastModifiedOn;
+
+    public static String BASE_URL = SearchUtils.BASE_URL;
 
     /**
      * Create a new Entity with the given id and name.

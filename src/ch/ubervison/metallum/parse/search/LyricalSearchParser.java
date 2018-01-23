@@ -41,7 +41,7 @@ public class LyricalSearchParser extends AbstractSimpleSearchParser<Band> {
                 String aka = "";
                 long bandId = 0;
 
-                Pattern bandPat = Pattern.compile("<a href=\"http://www.metal-archives.com/bands/.*/(?<id>[0-9]+)\">(?<name>.*)</a>(<strong>(.*)</strong>(.*)|(.*))<!-- .* -->");
+                Pattern bandPat = Pattern.compile("<a href=\"" + BASE_URL + "/bands/.*/(?<id>[0-9]+)\">(?<name>.*)</a>(<strong>(.*)</strong>(.*)|(.*))<!-- .* -->");
 
                 Matcher bandMatcher = bandPat.matcher(band);
                 if(bandMatcher.matches()){

@@ -98,9 +98,9 @@ public class Release extends AbstractEntity implements Accessible {
     }
 
     public URL getURL() throws MalformedURLException{
-        String baseURL = "http://www.metal-archives.com";
+        String baseURL = "" + BASE_URL + "";
         String typeSuffix = "/albums";
-        String trimmedReleaseName = getName().replaceAll(" ", "_");
+        String trimmedReleaseName = getName().replaceAll(" ", "_").replaceAll("/", "-");
         String trimmedBandName = getBand().getName().replaceAll(" ", "_");
 
         return new URL(baseURL + typeSuffix + "/" + trimmedBandName + "/" + trimmedReleaseName + "/" + getId());

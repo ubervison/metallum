@@ -39,7 +39,7 @@ public class BandSearchParser extends AbstractSimpleSearchParser<Band>{
                 String aka = null;
                 long id = 0;
 
-                Pattern pattern = Pattern.compile("<a href=\"http://www.metal-archives.com/bands/.*/(?<id>[0-9]+)\">(?<name>.*)</a>(<strong>(.*)</strong>(.*)|(.*))<!-- .* -->");
+                Pattern pattern = Pattern.compile("<a href=\"" + BASE_URL + "/bands/.*/(?<id>[0-9]+)\">(?<name>.*)</a>(<strong>(.*)</strong>(.*)|(.*))<!-- .* -->");
 
                 Matcher m = pattern.matcher(name);
                 if(m.matches()) {

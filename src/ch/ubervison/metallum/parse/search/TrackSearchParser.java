@@ -46,8 +46,8 @@ public class TrackSearchParser extends AbstractSimpleSearchParser<Track>{
                 long bandId = 0;
                 long releaseId = 0;
 
-                Pattern bandPat = Pattern.compile("(<a href=\"http://www.metal-archives.com/bands/.*/(?<id>[0-9]+)\" title=\".*\">(?<name>.*)</a>|<span title=\"This band participates on a split, but is not listed on the site.\">(?<splitName>.*)</span>)");
-                Pattern releasePat = Pattern.compile("<a href=\"http://www.metal-archives.com/albums/.*/.*/(?<id>[0-9]+)\">(?<title>.*)</a>");
+                Pattern bandPat = Pattern.compile("(<a href=\"" + BASE_URL + "/bands/.*/(?<id>[0-9]+)\" title=\".*\">(?<name>.*)</a>|<span title=\"This band participates on a split, but is not listed on the site.\">(?<splitName>.*)</span>)");
+                Pattern releasePat = Pattern.compile("<a href=\"" + BASE_URL + "/albums/.*/.*/(?<id>[0-9]+)\">(?<title>.*)</a>");
 
                 Matcher bandMatcher = bandPat.matcher(band);
                 if(bandMatcher.matches()){

@@ -2,7 +2,6 @@ package ch.ubervison.metallum.entity;
 
 import ch.ubervison.metallum.enums.BandStatus;
 import ch.ubervison.metallum.enums.Country;
-import com.sun.xml.internal.ws.api.message.Packet;
 
 import java.lang.management.MemoryNotificationInfo;
 import java.net.MalformedURLException;
@@ -238,7 +237,7 @@ public class Band extends AbstractEntity implements Accessible {
      * @throws MalformedURLException
      */
     public URL getURL() throws MalformedURLException{
-        String baseURL = "http://www.metal-archives.com";
+        String baseURL = "" + BASE_URL + "";
         String typeSuffix = "/bands";
         String trimmedName = getName().replaceAll(" ", "_");
 

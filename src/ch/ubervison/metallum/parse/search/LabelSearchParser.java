@@ -39,7 +39,7 @@ public class LabelSearchParser extends AbstractSimpleSearchParser<Label> {
                 String labelName = "";
                 long labelId = 0;
 
-                Pattern labelPat = Pattern.compile("<a href=\"http://www.metal-archives.com/labels/.*/(?<id>[0-9]+)\">(?<name>.*)</a>");
+                Pattern labelPat = Pattern.compile("<a href=\"" + BASE_URL + "/labels/.*/(?<id>[0-9]+)\">(?<name>.*)</a>");
 
                 Matcher labelMatcher = labelPat.matcher(label);
                 if(labelMatcher.matches()){
